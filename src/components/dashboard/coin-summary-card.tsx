@@ -1,18 +1,17 @@
 'use client';
 
 import * as React from 'react';
-
 import { cn } from '@/lib/utils';
 import { ArrowUpRight, Bitcoin } from 'lucide-react';
 import { Area, AreaChart } from 'recharts';
-import { DotPattern } from './ui/dotpattern';
-import { Card, CardContent, CardHeader } from './ui/card';
+import { DotPattern } from '../ui/dotpattern';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from './ui/chart';
+} from '../ui/chart';
 
 const chartData = [
   { month: 'January', desktop: 186 },

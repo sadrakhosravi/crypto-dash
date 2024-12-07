@@ -1,7 +1,6 @@
-// Components
 import { AppSidebar } from '@/components/app-sidebar';
-import { BalanceSummaryCard } from '@/components/balance-summary-card';
-import { CoinSummaryCard } from '@/components/coin-summary-card';
+import { BalanceSummaryCard } from '@/components/dashboard/balance-summary-card';
+import { CoinSummaryCard } from '@/components/dashboard/coin-summary-card';
 import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Separator } from '@/components/ui/separator';
