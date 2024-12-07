@@ -8,7 +8,7 @@ type LogoProps = {
   hideText?: boolean;
 };
 
-const Logo = ({
+export const Logo = ({
   width = 100,
   height = 100,
   fill = "white",
@@ -30,8 +30,8 @@ const Logo = ({
       </svg>
       {!hideText && (
         <div>
-          <p className="font-medium">Crypto Dash</p>
-          <p className="text-[11px] text-muted-foreground">
+          <p className="h-4 text-[1rem] font-medium">Crypto Dash</p>
+          <p className="text-[10px] text-muted-foreground">
             Version: {version}
           </p>
         </div>
@@ -40,4 +40,4 @@ const Logo = ({
   );
 };
 
-export default Logo;
+Logo.displayName = "Logo";

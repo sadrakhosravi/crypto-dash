@@ -1,8 +1,11 @@
 import * as React from "react";
 import Link from "next/link";
 
+// Icons
+import { LayoutGrid } from "lucide-react";
+
 // Components
-import Logo from "./logo";
+import { Logo } from "./logo";
 import {
   Sidebar,
   SidebarContent,
@@ -10,21 +13,24 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { SidebarMenuItem } from "./sidebar-menu-item";
 
 export const AppSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar>) => {
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="h-16 border-b border-sidebar-border flex justify-center">
+      <SidebarHeader className="flex h-16 justify-center border-b border-sidebar-border">
         <Logo width={32} height={32} fill="white" />
       </SidebarHeader>
-      <SidebarContent></SidebarContent>
+      <SidebarContent className="lg:px-4 lg:py-2">
+        <SidebarMenuItem label="Dashboard" icon={LayoutGrid} href="/" />
+      </SidebarContent>
       <SidebarFooter>
-        <span className="text-xs p-2">
+        <span className="p-2 text-xs">
           Developed by{" "}
           <Link
-            className="underline text-blue-300"
+            className="text-blue-300 underline"
             target="_blank"
             href="https://sadrakhosravi.com"
           >
@@ -36,3 +42,5 @@ export const AppSidebar = ({
     </Sidebar>
   );
 };
+
+AppSidebar.displayName = "AppSidebar";
