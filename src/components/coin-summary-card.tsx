@@ -1,44 +1,39 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-// Icons
-import { DotPattern } from "./ui/dotpattern";
-
-// Components
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { ArrowUpRight, Bitcoin } from "lucide-react";
-
-// Utils
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import { ArrowUpRight, Bitcoin } from 'lucide-react';
+import { Area, AreaChart } from 'recharts';
+import { DotPattern } from './ui/dotpattern';
+import { Card, CardContent, CardHeader } from './ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "./ui/chart";
-import { Area, AreaChart } from "recharts";
+} from './ui/chart';
 
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+  { month: 'April', desktop: 73 },
+  { month: 'May', desktop: 209 },
+  { month: 'June', desktop: 214 },
 ];
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    label: 'Desktop',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig;
 
-export const CoinSummaryCard = () => {
+export function CoinSummaryCard() {
   return (
-    <Card className="relative overflow-clip px-0 pb-0">
-      <CardHeader className="flex-row items-center justify-center gap-4 pt-6">
+    <Card className="relative flex h-full flex-col overflow-clip px-0 pb-0">
+      <CardHeader className="shrink-0 flex-row items-center justify-center gap-4 pt-6">
         <div className="rounded-md bg-yellow-600 p-2">
           <Bitcoin className="h-7 w-7" />
         </div>
@@ -47,8 +42,8 @@ export const CoinSummaryCard = () => {
           <h3 className="text-base font-semibold leading-tight">Bitcoin</h3>
         </div>
       </CardHeader>
-      <CardContent className="px-0 pb-0 pt-2">
-        <div className="mx-auto max-w-[350px] px-4">
+      <CardContent className="flex h-full flex-col justify-between px-0 pb-0 pt-2">
+        <div className="px-6">
           <div className="flex items-center gap-2">
             <div className="w-1/2">
               <h3 className="text-2xl font-medium">$60,000</h3>
@@ -64,8 +59,8 @@ export const CoinSummaryCard = () => {
           </div>
         </div>
 
-        <div className="pt-8">
-          <ChartContainer config={chartConfig} className="h-[100px] w-full">
+        <div className="w-full shrink-0 pt-4">
+          <ChartContainer config={chartConfig} className="h-full w-full">
             <AreaChart
               accessibilityLayer
               data={chartData}
@@ -91,8 +86,8 @@ export const CoinSummaryCard = () => {
         </div>
       </CardContent>
 
-      <div className="absolute left-1/2 top-[-300px] z-0 block h-[300px] w-full -translate-x-1/2 rotate-180 rounded-full bg-yellow-600 opacity-50 blur-3xl" />
-      <div className="absolute left-1/2 top-[-100px] z-0 block h-[100px] w-[50px] -translate-x-1/2 rotate-180 rounded-full bg-white opacity-30 blur-3xl" />
+      <div className="absolute left-1/2 top-[-200px] z-0 block h-[300px] w-[100px] -translate-x-1/2 rotate-180 rounded-full bg-yellow-600 opacity-50 blur-3xl" />
+      <div className="absolute left-1/2 top-[-80px] z-0 block h-[100px] w-[100px] -translate-x-1/2 rotate-180 rounded-full bg-white opacity-30 blur-3xl" />
       <DotPattern
         width={20}
         height={20}
@@ -100,9 +95,11 @@ export const CoinSummaryCard = () => {
         cy={1}
         cr={1}
         className={cn(
-          "h-[300px] opacity-40 [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]",
+          'h-[200px] opacity-40 [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]',
         )}
       />
     </Card>
   );
-};
+}
+
+CoinSummaryCard.displayName = 'CoinSummaryCard';
