@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${onest.className} antialiased dark`}>{children}</body>
+      <body className={`${onest.className} text-sm antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
