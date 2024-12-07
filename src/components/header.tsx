@@ -1,18 +1,16 @@
-import * as React from "react";
-
-// Components
+import * as React from 'react';
 import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbPage,
-} from "./ui/breadcrumb";
-import { SidebarTrigger } from "./ui/sidebar";
-import { Separator } from "./ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { ModeToggle } from "./mode-toggle";
+} from './ui/breadcrumb';
+import { SidebarTrigger } from './ui/sidebar';
+import { Separator } from './ui/separator';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+import { ModeToggle } from './mode-toggle';
 
-export const Header = () => {
+export function Header() {
   return (
     <header className="sticky top-0 flex h-16 shrink-0 items-center border-b bg-background px-4">
       <div className="flex w-2/3 items-center gap-1">
@@ -38,6 +36,6 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+}
 
-Header.displayName = "Header";
+Header.displayName = 'Header';
