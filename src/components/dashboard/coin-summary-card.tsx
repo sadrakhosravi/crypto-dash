@@ -12,6 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '../ui/chart';
+import { CoinInfo } from '../coin-info';
 
 const chartData = [
   { month: 'January', desktop: 186 },
@@ -33,13 +34,7 @@ export function CoinSummaryCard() {
   return (
     <Card className="relative flex h-full flex-col overflow-clip px-0 pb-0">
       <CardHeader className="shrink-0 flex-row items-center justify-center gap-4 pt-6">
-        <div className="rounded-md bg-yellow-600 p-2">
-          <Bitcoin className="h-7 w-7" />
-        </div>
-        <div>
-          <p className="text-sm text-muted-foreground">BTC</p>
-          <h3 className="text-base font-semibold leading-tight">Bitcoin</h3>
-        </div>
+        <CoinInfo icon={Bitcoin} name="Bitcoin" symbol="BTC" swapText />
       </CardHeader>
       <CardContent className="flex h-full flex-col justify-between px-0 pb-0 pt-2">
         <div className="px-6">
