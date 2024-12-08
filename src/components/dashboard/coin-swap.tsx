@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 export const CoinSwap = () => {
   return (
     <Card className="h-full overflow-clip">
-      <CardHeader className="relative m-1 shrink-0 gap-6 rounded-md bg-primary/10 pb-12 pt-6">
+      <CardHeader className="relative m-1 shrink-0 gap-4 rounded-md bg-primary/10 pb-8 pt-6">
         <div className="flex flex-row items-center justify-between gap-4">
           <CoinInfo icon={Bitcoin} name="Bitcoin" symbol="BTC" />
           <div className="flex flex-col items-end">
@@ -26,8 +26,8 @@ export const CoinSwap = () => {
       <CardContent className="relative">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button className="absolute left-1/2 top-0 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full p-2">
-              <ArrowDownUp className="h-10 w-10" />
+            <Button className="absolute left-1/2 top-0 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full p-2">
+              <ArrowDownUp className="h-8 w-8" />
             </Button>
           </TooltipTrigger>
           <TooltipContent>

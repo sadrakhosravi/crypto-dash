@@ -32,32 +32,37 @@ const chartConfig = {
 
 export function CoinSummaryCard() {
   return (
-    <Card className="relative flex h-full flex-col overflow-clip px-0 pb-0">
+    <Card className="relative flex h-full w-full flex-col overflow-hidden px-0 pb-0">
+      {/* Header */}
       <CardHeader className="shrink-0 flex-row items-center justify-center gap-4 pt-6">
         <CoinInfo icon={Bitcoin} name="Bitcoin" symbol="BTC" swapText />
       </CardHeader>
-      <CardContent className="flex h-full flex-col justify-between px-0 pb-0 pt-2">
+
+      {/* Content */}
+      <CardContent className="flex h-full flex-col justify-between gap-4 px-0 pb-0 pt-2">
+        {/* Top Section */}
         <div className="px-6">
           <div className="flex items-center gap-2">
             <div className="w-1/2">
-              <h3 className="text-2xl font-medium">$60,000</h3>
+              <h3 className="text-lg font-medium">$60,000</h3>
               <span className="text-muted-foreground">1.00 BTC</span>
             </div>
-
             <div className="flex w-1/2 items-center justify-end gap-2">
-              <div className="w-max rounded-full bg-blue-500 p-1.5">
-                <ArrowUpRight className="h-4 w-4 text-white" />
+              <div className="w-max rounded-full bg-blue-500 p-1">
+                <ArrowUpRight className="h-3 w-3 text-white" />
               </div>
               <span>+1.67%</span>
             </div>
           </div>
         </div>
 
-        <div className="w-full shrink-0 pt-4">
-          <ChartContainer config={chartConfig} className="h-full w-full">
+        {/* Chart Section */}
+        <div className="flex flex-grow items-end justify-center overflow-hidden">
+          <ChartContainer config={chartConfig} className="h-[100px] w-full">
             <AreaChart
               accessibilityLayer
               data={chartData}
+              className="h-full w-full"
               margin={{
                 left: -1,
                 right: -1,
@@ -80,6 +85,7 @@ export function CoinSummaryCard() {
         </div>
       </CardContent>
 
+      {/* Background Decorations */}
       <div className="absolute left-1/2 top-[-200px] z-0 block h-[300px] w-[100px] -translate-x-1/2 rotate-180 rounded-full bg-yellow-600 opacity-50 blur-3xl" />
       <div className="absolute left-1/2 top-[-80px] z-0 block h-[100px] w-[100px] -translate-x-1/2 rotate-180 rounded-full bg-white opacity-30 blur-3xl" />
       <DotPattern
