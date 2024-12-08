@@ -18,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${onest.className} text-sm antialiased`}>
+      <body
+        className={`${onest.className} min-w-screen min-h-screen overflow-y-hidden text-sm antialiased`}
+      >
         {children}
       </body>
     </html>

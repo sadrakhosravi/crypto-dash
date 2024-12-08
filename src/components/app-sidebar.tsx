@@ -13,7 +13,7 @@ import { SidebarMenuItem } from './sidebar-menu-item';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props}>
+    <Sidebar {...props} className="bg-sidebar-primary">
       <SidebarHeader className="flex h-16 justify-center border-b border-sidebar-border">
         <Logo width={24} height={24} fill="white" />
       </SidebarHeader>
