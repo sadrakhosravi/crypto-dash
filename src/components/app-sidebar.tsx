@@ -1,6 +1,8 @@
+'use client';
+
 import * as React from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutGrid } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
@@ -10,15 +12,27 @@ import {
 } from '@/components/ui/sidebar';
 import { Logo } from './logo';
 import { SidebarMenuItem } from './sidebar-menu-item';
+import { routes } from '@/routes/routes';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  console.log(pathname);
+
   return (
     <Sidebar {...props} className="bg-sidebar-primary">
       <SidebarHeader className="flex h-16 justify-center border-b border-sidebar-border">
         <Logo width={24} height={24} fill="white" />
       </SidebarHeader>
       <SidebarContent className="lg:px-4 lg:py-2">
-        <SidebarMenuItem label="Dashboard" icon={LayoutGrid} href="/" />
+        {routes.map((route) => (
+          <SidebarMenuItem
+            key={route.path}
+            label={route.name}
+            icon={route.icon}
+            href={route.path}
+            isActive={pathname === route.path}
+          />
+        ))}
       </SidebarContent>
       <SidebarFooter>
         <span className="p-2 text-xs">
