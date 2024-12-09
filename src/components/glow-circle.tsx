@@ -37,6 +37,7 @@ export const GlowCircle: React.FC<GlowCircleProps> = ({
         height: `${size}px`,
         backgroundColor: color,
         opacity: opacity,
+        zIndex: 0,
       }}
     />
   );

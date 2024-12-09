@@ -26,17 +26,17 @@ export function SidebarMenuItem({
       )}
       href={href}
     >
-      <Icon className="h-5 w-5" />
-      <span className="font-medium">{label}</span>
+      <Icon className="z-[1] h-5 w-5" />
+      <span className="z-[1] font-medium">{label}</span>
 
       {isActive && (
         <GlowCircle
-          size={50}
-          top="-10px"
-          left="0px"
-          color="white"
-          opacity={1}
-          blur="blur-2xl"
+          size={500}
+          top="-450px"
+          left="-30px"
+          color="#3b82f6"
+          opacity={0.5}
+          blur="blur-xl"
         />
       )}
     </Link>

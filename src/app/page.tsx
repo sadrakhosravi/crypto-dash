@@ -9,8 +9,8 @@ import { PieChart, TrendingUp } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
-      <div className="flex h-1/2 flex-1 flex-shrink-0 items-stretch gap-4 p-6 pb-3">
+    <div className="flex h-full flex-col">
+      <div className="min-h-1/2 flex h-1/2 flex-1 items-stretch gap-4 p-6 pb-3">
         {/* Left Section */}
         <Section
           className="w-1/3"
