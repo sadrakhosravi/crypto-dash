@@ -15,6 +15,8 @@ import {
 import { CoinInfo } from '../coin-info';
 import { useCoinPrice } from '@/hooks/api/use-coin-price';
 import { movingAverage } from '@/utils/moving-average';
+import { Skeleton } from '../ui/skeleton';
+import BlurFade from '../ui/blur-fade';
 
 const chartConfig = {
   chart: {
@@ -36,7 +38,7 @@ export function CoinSummaryCard({
   symbol,
   color,
 }: CoinSummaryCardProps) {
-  const { data } = useCoinPrice(coinId);
+  const { data, isPending } = useCoinPrice(coinId);
 
   // Calculate the moving average of the last 7 days
   const avgPrice = movingAverage(
@@ -61,49 +63,80 @@ export function CoinSummaryCard({
     <Card className="relative flex h-full w-full flex-col overflow-hidden px-0 pb-0">
       {/* Header */}
       <CardHeader className="shrink-0 flex-row items-center justify-center gap-4 pt-6">
-        <CoinInfo
-          img={data?.image.large || ''}
-          name={name}
-          symbol={symbol}
-          swapText
-        />
+        {isPending ? (
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-12 rounded-sm" />
+              <Skeleton className="h-4 w-20 rounded-sm" />
+            </div>
+          </div>
+        ) : (
+          <BlurFade delay={0.25} inView>
+            <CoinInfo
+              img={data?.image.large || ''}
+              name={name}
+              symbol={symbol}
+              swapText
+            />
+          </BlurFade>
+        )}
       </CardHeader>
 
       {/* Content */}
       <CardContent className="flex h-full flex-col justify-between gap-4 px-0 pb-0 pt-2">
         {/* Top Section */}
         <div className="px-6">
-          <div className="flex items-center gap-2">
-            <div className="w-1/2">
-              <h3 className="text-lg font-medium">
-                {USDollar.format(data?.market_data.current_price.usd || 0)}
-              </h3>
-              <span className="text-muted-foreground">1.00 {symbol}</span>
+          {isPending ? (
+            <div className="flex items-center gap-2">
+              <div className="w-1/2">
+                {/* Price Skeleton */}
+                <Skeleton className="mb-1 h-5 w-24" />
+                {/* Symbol Skeleton */}
+                <Skeleton className="h-4 w-16" />
+              </div>
+              <div className="flex w-1/2 items-center justify-end gap-2">
+                {/* Trend Icon Skeleton */}
+                <Skeleton className="h-6 w-6 rounded-full" />
+                {/* Percentage Change Skeleton */}
+                <Skeleton className="h-5 w-16" />
+              </div>
             </div>
-            <div className="flex w-1/2 items-center justify-end gap-2">
-              {isTrendPositive ? (
-                <div className="w-max rounded-full bg-blue-500 p-1">
-                  <ArrowUpRight className="h-3 w-3 text-white" />
+          ) : (
+            <BlurFade delay={0.25} inView>
+              <div className="flex items-center gap-2">
+                <div className="w-1/2">
+                  <h3 className="text-lg font-medium">
+                    {USDollar.format(data?.market_data.current_price.usd || 0)}
+                  </h3>
+                  <span className="text-muted-foreground">1.00 {symbol}</span>
                 </div>
-              ) : (
-                <div className="w-max rounded-full bg-red-500 p-1">
-                  <ArrowDownRight className="h-3 w-3 text-white" />
-                </div>
-              )}
+                <div className="flex w-1/2 items-center justify-end gap-2">
+                  {isTrendPositive ? (
+                    <div className="w-max rounded-full bg-blue-500 p-1">
+                      <ArrowUpRight className="h-3 w-3 text-white" />
+                    </div>
+                  ) : (
+                    <div className="w-max rounded-full bg-red-500 p-1">
+                      <ArrowDownRight className="h-3 w-3 text-white" />
+                    </div>
+                  )}
 
-              <span
-                className={cn(
-                  'font-normal',
-                  isTrendPositive ? 'text-blue-500' : 'text-red-500',
-                )}
-              >
-                {data?.market_data.price_change_24h_in_currency.usd.toFixed(
-                  2,
-                ) || 0}
-                %
-              </span>
-            </div>
-          </div>
+                  <span
+                    className={cn(
+                      'font-normal',
+                      isTrendPositive ? 'text-blue-500' : 'text-red-500',
+                    )}
+                  >
+                    {data?.market_data.price_change_24h_in_currency.usd.toFixed(
+                      2,
+                    ) || 0}
+                    %
+                  </span>
+                </div>
+              </div>
+            </BlurFade>
+          )}
         </div>
 
         {/* Chart Section */}

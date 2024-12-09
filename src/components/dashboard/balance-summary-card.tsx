@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { cn } from '@/lib/utils';
+import { cn, USDollar } from '@/lib/utils';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { Area, AreaChart, YAxis } from 'recharts';
 import { DotPattern } from '../ui/dotpattern';
@@ -15,6 +15,8 @@ import {
 import { useCoinPrice } from '@/hooks/api/use-coin-price';
 import { dashboardData } from '@/data/dashboard-data';
 import { movingAverage } from '@/utils/moving-average';
+import { Skeleton } from '../ui/skeleton';
+import BlurFade from '../ui/blur-fade';
 
 const chartConfig = {
   summary: {
@@ -24,15 +26,17 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BalanceSummaryCard() {
-  const { data: btcData } = useCoinPrice(
+  const { data: btcData, isPending: isPendingBTC } = useCoinPrice(
     dashboardData.summaryCardCoins[0].name.toLowerCase(),
   );
-  const { data: ethData } = useCoinPrice(
+  const { data: ethData, isPending: isPendingEth } = useCoinPrice(
     dashboardData.summaryCardCoins[1].name.toLowerCase(),
   );
-  const { data: dogeData } = useCoinPrice(
+  const { data: dogeData, isPending: isPendingDoge } = useCoinPrice(
     dashboardData.summaryCardCoins[2].name.toLowerCase(),
   );
+
+  const isPending = isPendingBTC || isPendingEth || isPendingDoge;
 
   const total =
     ((btcData?.market_data.current_price.usd || 0) +
@@ -75,36 +79,64 @@ export function BalanceSummaryCard() {
   return (
     <Card className="relative flex h-full w-full flex-1 flex-col overflow-hidden px-0 pb-0">
       <CardHeader className="flex-shrink-0 flex-row items-center justify-start gap-4 pb-3 pt-6">
-        <h3 className="text-3xl font-medium">${total.toFixed(2)}</h3>
+        {isPending ? (
+          <Skeleton className="h-10 w-2/3 rounded-md" />
+        ) : (
+          <BlurFade delay={0.2} inView className="m-1 mt-2">
+            <h3 className="text-3xl font-medium">{USDollar.format(total)}</h3>
+          </BlurFade>
+        )}
       </CardHeader>
       <CardContent className="flex h-full flex-col gap-4 px-0 pb-0">
         {/* Top Section */}
-        <div className="flex-shrink-0 px-6">
-          <div className="flex items-center gap-2">
-            {isTrendPositive ? (
-              <div className="w-max rounded-full bg-blue-500 p-1">
-                <ArrowUpRight className="h-3 w-3 text-white" />
-              </div>
-            ) : (
-              <div className="w-max rounded-full bg-red-500 p-1">
-                <ArrowDownRight className="h-3 w-3 text-white" />
-              </div>
-            )}
-            <h4
-              className={cn(
-                'font-normal',
-                isTrendPositive ? 'text-blue-500' : 'text-red-500',
-              )}
-            >
-              ${totalChange.toFixed(2)}
-            </h4>
-            <span>{percentageChange.toFixed(2)} %</span>
+        {isPending ? (
+          <div className="flex-shrink-0 px-6">
+            {/* Top Section Skeleton */}
+            <div className="flex items-center gap-2">
+              {/* Trend Icon Skeleton */}
+              <Skeleton className="h-6 w-6 rounded-full" />
+              {/* Change Value Skeleton */}
+              <Skeleton className="h-5 w-16" />
+              {/* Percentage Skeleton */}
+              <Skeleton className="h-5 w-12" />
+            </div>
+            {/* Description Text Skeleton */}
+            <div className="mt-2">
+              <Skeleton className="h-4 w-64" />
+              <Skeleton className="mt-1 h-4 w-40" />
+            </div>
           </div>
-          <div className="mt-2 text-sm text-muted-foreground">
-            {percentageChange.toFixed(2)}% {isTrendPositive ? 'more' : 'less'}{' '}
-            than last week at this period
-          </div>
-        </div>
+        ) : (
+          <BlurFade delay={0.35} inView className="m-1 mt-2">
+            <div className="flex-shrink-0 px-6">
+              <div className="flex items-center gap-2">
+                {isTrendPositive ? (
+                  <div className="w-max rounded-full bg-blue-500 p-1">
+                    <ArrowUpRight className="h-3 w-3 text-white" />
+                  </div>
+                ) : (
+                  <div className="w-max rounded-full bg-red-500 p-1">
+                    <ArrowDownRight className="h-3 w-3 text-white" />
+                  </div>
+                )}
+                <h4
+                  className={cn(
+                    'font-normal',
+                    isTrendPositive ? 'text-blue-500' : 'text-red-500',
+                  )}
+                >
+                  ${totalChange.toFixed(2)}
+                </h4>
+                <span>{percentageChange.toFixed(2)} %</span>
+              </div>
+              <div className="mt-2 text-sm text-muted-foreground">
+                {percentageChange.toFixed(2)}%{' '}
+                {isTrendPositive ? 'more' : 'less'} than last week at this
+                period
+              </div>
+            </div>
+          </BlurFade>
+        )}
 
         {/* Chart Section */}
         <div className="flex flex-grow flex-col items-center justify-end overflow-hidden">

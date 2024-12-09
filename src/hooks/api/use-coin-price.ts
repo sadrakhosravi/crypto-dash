@@ -18,8 +18,15 @@ type BitcoinPriceData = {
     small: string;
     large: string;
   };
+  name: string;
+  symbol: string;
 };
 
+/**
+ * Fetches the coin price data.
+ * @param coinId - The coin id.
+ * @returns
+ */
 export const useCoinPrice = (
   coinId: string,
 ): UseQueryResult<BitcoinPriceData> => {

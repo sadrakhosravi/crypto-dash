@@ -7,6 +7,7 @@ import { AppSidebar } from '@/components/app-sidebar';
 import { Header } from '@/components/header';
 import type { Metadata } from 'next';
 import ReactQueryProvider from './ReactQueryProvider';
+import { Toaster } from 'sonner';
 
 // Font
 const onest = Onest({ subsets: ['latin'] });
@@ -42,6 +43,7 @@ export default function RootLayout({
                   <main className="h-[calc(100%-43rem)] min-h-[calc(100%-4rem)]">
                     {children}
                   </main>
+                  <Toaster />
                 </SidebarInset>
               </SidebarProvider>
             </TooltipProvider>
