@@ -24,7 +24,7 @@ export function CryptoCard({
 }: CryptoCardProps) {
   return (
     <div className="flex flex-row items-center gap-4 rounded-lg p-4 shadow-md">
-      <CoinInfo icon={Bitcoin} name="Bitcoin" symbol="BTC" />
+      <CoinInfo img="" name="Bitcoin" symbol="BTC" />
 
       <div className="flex-grow">{chart}</div>
       <div className="flex flex-col items-end">

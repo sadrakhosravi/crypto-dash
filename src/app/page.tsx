@@ -5,6 +5,7 @@ import { MarketList } from '@/components/dashboard/market-list';
 import { Section } from '@/components/section';
 import { SectionTitle } from '@/components/section-title';
 import { Card, CardContent } from '@/components/ui/card';
+import { dashboardData } from '@/data/dashboard-data';
 import { PieChart, TrendingUp } from 'lucide-react';
 
 export default function Home() {
@@ -37,15 +38,16 @@ export default function Home() {
             }
           >
             <div className="flex h-full flex-row items-stretch gap-2">
-              <div className="h-full flex-1">
-                <CoinSummaryCard />
-              </div>
-              <div className="h-full flex-1">
-                <CoinSummaryCard />
-              </div>
-              <div className="h-full flex-1">
-                <CoinSummaryCard />
-              </div>
+              {dashboardData.summaryCardCoins.map((coin) => (
+                <div key={coin.name} className="h-full flex-1">
+                  <CoinSummaryCard
+                    coinId={coin.name.toLowerCase()}
+                    name={coin.name}
+                    symbol={coin.symbol}
+                    color={coin.color}
+                  />
+                </div>
+              ))}
             </div>
           </Section>
         </div>

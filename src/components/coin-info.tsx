@@ -1,8 +1,9 @@
 import * as React from 'react';
-import type { LucideIcon } from 'lucide-react';
+import Image from 'next/image';
+import Placeholder from '../../public/imgs/placeholder.png';
 
 type CoinInfoProps = {
-  icon: LucideIcon;
+  img: string;
   name: string;
   symbol: string;
   color?: string;
@@ -10,7 +11,7 @@ type CoinInfoProps = {
 };
 
 export const CoinInfo = ({
-  icon: Icon,
+  img,
   name,
   symbol,
   color,
@@ -19,12 +20,17 @@ export const CoinInfo = ({
   return (
     <div className="flex items-center gap-3">
       <div
-        className="rounded-lg bg-yellow-600 p-2"
+        className="rounded-lg"
         style={{
           backgroundColor: color,
         }}
       >
-        <Icon className="h-7 w-7" />
+        <Image
+          src={img || Placeholder}
+          width={48}
+          height={48}
+          alt={name + ' Logo'}
+        />
       </div>
       <div>
         {swapText ? (

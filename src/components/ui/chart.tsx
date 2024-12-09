@@ -4,7 +4,8 @@
 
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
-import { cn } from '@/lib/utils';
+import { cn, USDollar } from '@/lib/utils';
+import { TooltipProps } from 'recharts';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -261,6 +262,26 @@ const ChartTooltipContent = React.forwardRef<
   },
 );
 ChartTooltipContent.displayName = 'ChartTooltip';
+
+// Custom Tooltip Component
+export const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
+  if (active && payload && payload.length > 0) {
+    return (
+      <div className="custom-tooltip rounded-md bg-secondary p-2">
+        <p className="label">{`Day: ${label}`}</p>
+        <p className="price">{`Price: ${USDollar.format(payload[0].value || 0)}`}</p>{' '}
+      </div>
+    );
+  }
+
+  return null;
+};
+
+CustomTooltip.displayName = 'CustomTooltip';
 
 const ChartLegend = RechartsPrimitive.Legend;
 

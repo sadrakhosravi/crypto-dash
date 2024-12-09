@@ -2,51 +2,107 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { ArrowUpRight } from 'lucide-react';
-import { Area, AreaChart } from 'recharts';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { Area, AreaChart, YAxis } from 'recharts';
 import { DotPattern } from '../ui/dotpattern';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  CustomTooltip,
 } from '../ui/chart';
-
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-];
+import { useCoinPrice } from '@/hooks/api/use-coin-price';
+import { dashboardData } from '@/data/dashboard-data';
+import { movingAverage } from '@/utils/moving-average';
 
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
+  summary: {
+    label: 'Account',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig;
 
 export function BalanceSummaryCard() {
+  const { data: btcData } = useCoinPrice(
+    dashboardData.summaryCardCoins[0].name.toLowerCase(),
+  );
+  const { data: ethData } = useCoinPrice(
+    dashboardData.summaryCardCoins[1].name.toLowerCase(),
+  );
+  const { data: dogeData } = useCoinPrice(
+    dashboardData.summaryCardCoins[2].name.toLowerCase(),
+  );
+
+  const total =
+    ((btcData?.market_data.current_price.usd || 0) +
+      (ethData?.market_data.current_price.usd || 0) +
+      (dogeData?.market_data.current_price.usd || 0)) *
+    0.3;
+
+  const totalChange =
+    (btcData?.market_data.price_change_24h_in_currency.usd || 0) +
+    (ethData?.market_data.price_change_24h_in_currency.usd || 0) +
+    (dogeData?.market_data.price_change_24h_in_currency.usd || 0);
+
+  const avgPriceBTC = movingAverage(
+    btcData?.market_data.sparkline_7d.price || [],
+    24,
+  );
+  const avgPriceEth = movingAverage(
+    ethData?.market_data.sparkline_7d.price || [],
+    24,
+  );
+  const avgPriceDoge = movingAverage(
+    dogeData?.market_data.sparkline_7d.price || [],
+    24,
+  );
+
+  const totalAvgPrice = avgPriceBTC.map(
+    (price, index) => (price + avgPriceEth[index] + avgPriceDoge[index]) * 0.3,
+  );
+  const minValue = Math.min(...totalAvgPrice);
+  const maxValue = Math.max(...totalAvgPrice);
+
+  const chartData = totalAvgPrice.map((price, index) => ({
+    time: index === 0 ? 'Today' : `${index}d ago`,
+    price: totalAvgPrice[index],
+  }));
+
+  const percentageChange = (totalChange / total) * 100;
+  const isTrendPositive = totalChange >= 0;
+
   return (
     <Card className="relative flex h-full w-full flex-1 flex-col overflow-hidden px-0 pb-0">
       <CardHeader className="flex-shrink-0 flex-row items-center justify-start gap-4 pb-3 pt-6">
-        <h3 className="text-3xl font-medium">$60,000</h3>
+        <h3 className="text-3xl font-medium">${total.toFixed(2)}</h3>
       </CardHeader>
       <CardContent className="flex h-full flex-col gap-4 px-0 pb-0">
         {/* Top Section */}
         <div className="flex-shrink-0 px-6">
           <div className="flex items-center gap-2">
-            <div className="w-max rounded-full bg-blue-500 p-1.5">
-              <ArrowUpRight className="h-4 w-4 text-white" />
-            </div>
-            <h4 className="font-normal text-blue-500">+3,650.23%</h4>
-            <span>(+16.21%)</span>
+            {isTrendPositive ? (
+              <div className="w-max rounded-full bg-blue-500 p-1">
+                <ArrowUpRight className="h-3 w-3 text-white" />
+              </div>
+            ) : (
+              <div className="w-max rounded-full bg-red-500 p-1">
+                <ArrowDownRight className="h-3 w-3 text-white" />
+              </div>
+            )}
+            <h4
+              className={cn(
+                'font-normal',
+                isTrendPositive ? 'text-blue-500' : 'text-red-500',
+              )}
+            >
+              ${totalChange.toFixed(2)}
+            </h4>
+            <span>{percentageChange.toFixed(2)} %</span>
           </div>
           <div className="mt-2 text-sm text-muted-foreground">
-            6% more than last week at this period
+            {percentageChange.toFixed(2)}% {isTrendPositive ? 'more' : 'less'}{' '}
+            than last week at this period
           </div>
         </div>
 
@@ -62,16 +118,18 @@ export function BalanceSummaryCard() {
                 right: -1,
               }}
             >
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
+              <YAxis
+                width={0}
+                domain={[minValue * 0.97, maxValue * 1.03]} // Add padding to min and max values
+                tickFormatter={(value) => `$${value}`} // Format Y-axis values (e.g., add "$")
               />
+              <ChartTooltip cursor={false} content={<CustomTooltip />} />
               <Area
-                dataKey="desktop"
+                dataKey="price"
                 type="natural"
-                fill="var(--color-desktop)"
+                fill="var(--color-summary)"
                 fillOpacity={0.3}
-                stroke="var(--color-desktop)"
+                stroke="var(--color-summary)"
                 strokeWidth={2}
               />
             </AreaChart>

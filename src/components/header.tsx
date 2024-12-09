@@ -9,6 +9,7 @@ import { SidebarTrigger } from './ui/sidebar';
 import { Separator } from './ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { ModeToggle } from './mode-toggle';
+import { ApiResponseStatus } from './api-response-status';
 
 export function Header() {
   return (
@@ -31,7 +32,9 @@ export function Header() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="flex w-1/3 items-center justify-end">
+
+      <div className="flex w-1/3 items-center justify-end gap-2">
+        <ApiResponseStatus />
         <ModeToggle />
       </div>
     </header>
