@@ -58,7 +58,7 @@ export default function Home() {
           <CardContent className="flex h-full items-stretch gap-3 pt-6">
             <Section
               className="w-2/3"
-              sectionTitleComponent={<SectionTitle title="Market" />}
+              sectionTitleComponent={<SectionTitle title="Trending" />}
             >
               <MarketList />
             </Section>

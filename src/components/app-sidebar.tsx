@@ -16,7 +16,6 @@ import { routes } from '@/routes/routes';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <Sidebar {...props} className="bg-sidebar-primary">

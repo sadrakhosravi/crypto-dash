@@ -14,6 +14,11 @@ import {
 export function ModeToggle() {
   const { setTheme } = useTheme();
 
+  // Set the theme to dark mode on mount
+  React.useLayoutEffect(() => {
+    setTheme('dark');
+  }, []);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
