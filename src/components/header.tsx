@@ -10,6 +10,7 @@ import { Separator } from './ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { ModeToggle } from './mode-toggle';
 import { ApiResponseStatus } from './api-response-status';
+import { HeaderRouteTitle } from './header-route-title';
 
 export function Header() {
   return (
@@ -27,7 +28,9 @@ export function Header() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbPage>Dashboard</BreadcrumbPage>
+              <BreadcrumbPage>
+                <HeaderRouteTitle />
+              </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

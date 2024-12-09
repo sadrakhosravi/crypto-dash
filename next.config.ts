@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*/',
+        destination: `https://atsym9enh8.execute-api.us-west-1.amazonaws.com/Prod/:path*`,
+      },
+    ];
+  },
+
+  crossOrigin: 'anonymous',
 };
 
 export default nextConfig;

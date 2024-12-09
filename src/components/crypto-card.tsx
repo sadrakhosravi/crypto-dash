@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cn, USDollar } from '@/lib/utils'; // Helper function for conditional classNames
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
-import { CoinInfo } from '../coin-info';
+import { CoinInfo } from './coin-info';
 import Image from 'next/image';
 
 type CryptoCardProps = {
@@ -11,7 +11,7 @@ type CryptoCardProps = {
   price: number;
   change: string;
   changePositive: boolean;
-  trendImg: string;
+  trendImg?: string;
 };
 
 export function CryptoCard({
@@ -24,18 +24,20 @@ export function CryptoCard({
   trendImg,
 }: CryptoCardProps) {
   return (
-    <div className="z-10 flex flex-row items-center gap-10 rounded-lg p-4 shadow-md">
+    <div className="z-10 flex flex-row items-center justify-between gap-10 rounded-lg p-4 shadow-md">
       <CoinInfo img={img} name={name} symbol={symbol} />
 
-      <div className="flex-grow">
-        <Image
-          src={trendImg}
-          className="h-12 w-[100%]"
-          width={100}
-          height={40}
-          alt="Trend Image"
-        />
-      </div>
+      {trendImg && (
+        <div className="flex-grow">
+          <Image
+            src={trendImg}
+            className="h-12 w-[100%]"
+            width={100}
+            height={40}
+            alt="Trend Image"
+          />
+        </div>
+      )}
       <div className="flex flex-col items-end">
         <h3 className="text-base font-semibold">{USDollar.format(price)}</h3>
         <div

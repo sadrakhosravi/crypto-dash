@@ -1,4 +1,4 @@
-import { LayoutGrid, TrendingUp, Wallet } from 'lucide-react';
+import { AlertCircle, LayoutGrid, Wallet2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 // Define the structure of a route
@@ -16,13 +16,13 @@ export const routes: Route[] = [
     icon: LayoutGrid,
   },
   {
-    name: 'Market',
-    path: '/market',
-    icon: TrendingUp,
-  },
-  {
     name: 'Wallet',
     path: '/wallet',
-    icon: Wallet,
+    icon: Wallet2,
+  },
+  {
+    name: 'Not Found',
+    path: '/404',
+    icon: AlertCircle,
   },
 ];

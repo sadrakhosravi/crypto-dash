@@ -37,6 +37,7 @@ export const CoinSwap = () => {
             <div className="flex items-center gap-3">
               <div className="rounded-lg">
                 <Image
+                  className="rounded-full"
                   src={data?.image.small || Placeholder}
                   width={48}
                   height={48}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { CryptoCard } from './crypto-card';
+import { CryptoCard } from '../crypto-card';
 import { Card, CardContent } from '../ui/card';
 import { Separator } from '../ui/separator';
 import { DotPattern } from '../ui/dotpattern';
