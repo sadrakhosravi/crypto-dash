@@ -20,8 +20,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { Loader } from '../ui/loader';
 
 const AddCryptoForm: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -35,41 +39,58 @@ const AddCryptoForm: React.FC = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    fetch(
-      'https://atsym9enh8.execute-api.us-west-1.amazonaws.com/Prod/crypto',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: values.name,
-          symbol: values.symbol.toUpperCase(), // Ensure symbol is uppercase
-          price: values.price,
-          market_cap: values.market_cap,
-        }),
-      },
-    )
-      .then((response) => {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Access-Control-Allow-Origin', '*');
+    myHeaders.append('Accept', '*/*');
+    myHeaders.append('Accept-Encoding', 'gzip, deflate, br');
+
+    const raw = JSON.stringify({
+      ...values,
+    });
+
+    setLoading(true);
+
+    fetch('/api/crypto', {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    })
+      .then(async (response) => {
+        setLoading(false);
+
         if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.error || 'Failed to add cryptocurrency.');
+          const error = await response.json();
+          toast.error(error['error'], {
+            position: 'top-center',
           });
+          return;
         }
+        toast.success('Crypto added successfully', {
+          position: 'top-center',
+        });
         return response.json();
       })
-      .then((data) => {
-        alert(`Success: ${data.message}`);
-      })
-      .catch((error) => {
-        alert(`Error: ${error.message}`);
-      });
+      .then((result) => console.log(result))
+      .catch((error) =>
+        toast.error('Error adding crypto', {
+          position: 'top-center',
+        }),
+      );
+
+    setLoading(false);
   }
 
   return (
     <Card className="relative h-full overflow-clip border">
       <CardContent className="flex w-full flex-col py-4">
-        <ScrollArea className="h-full w-full">
+        <ScrollArea className="relative h-full w-full">
+          {loading && (
+            <div className="absolute left-0 top-0 z-[50] flex h-full w-full items-center justify-center">
+              <Loader />
+            </div>
+          )}
           <h2 className="mb-4 text-xl">Add New Crypto</h2>
           <Form {...form}>
             <form
@@ -139,12 +160,21 @@ const AddCryptoForm: React.FC = () => {
                 )}
               />
               <div className="w-full text-right">
-                <Button className="h-12 w-full" type="submit">
+                <Button
+                  className="h-12 w-full"
+                  type="submit"
+                  disabled={loading}
+                >
                   Submit
                 </Button>
               </div>
             </form>
           </Form>
+
+          <div className="mt-4 text-foreground/70">
+            If your addition is successful, please reload the page to see the
+            new crypto.
+          </div>
         </ScrollArea>
 
         <div className="absolute bottom-[-200px] right-[30px] z-0 block h-[300px] w-[100px] -translate-x-1/2 rotate-180 rounded-full bg-blue-500 opacity-40 blur-3xl" />
