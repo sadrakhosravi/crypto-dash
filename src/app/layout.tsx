@@ -6,6 +6,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import { Header } from '@/components/header';
 import type { Metadata } from 'next';
+import ReactQueryProvider from './ReactQueryProvider';
 
 // Font
 const onest = Onest({ subsets: ['latin'] });
@@ -31,18 +32,20 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider delayDuration={0}>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>
-                <Header />
+          <ReactQueryProvider>
+            <TooltipProvider delayDuration={0}>
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                  <Header />
 
-                <main className="h-[calc(100%-43rem)] min-h-[calc(100%-4rem)]">
-                  {children}
-                </main>
-              </SidebarInset>
-            </SidebarProvider>
-          </TooltipProvider>
+                  <main className="h-[calc(100%-43rem)] min-h-[calc(100%-4rem)]">
+                    {children}
+                  </main>
+                </SidebarInset>
+              </SidebarProvider>
+            </TooltipProvider>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
