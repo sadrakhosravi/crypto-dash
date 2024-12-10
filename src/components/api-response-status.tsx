@@ -7,10 +7,10 @@ import { Badge } from './ui/badge';
 export const ApiResponseStatus = () => {
   const { status } = usePingApi();
   return (
-    <div>
+    <div className="">
       {status === 'success' && (
         <Badge
-          className="h-8 border border-green-600 bg-green-600 text-white hover:bg-green-600"
+          className="h-8 w-max border border-green-600 bg-green-600 text-white hover:bg-green-600"
           variant="secondary"
         >
           API: Online
@@ -18,7 +18,7 @@ export const ApiResponseStatus = () => {
       )}
       {status === 'error' && (
         <Badge
-          className="h-8 border border-rose-600 bg-rose-600 text-white hover:bg-rose-600"
+          className="h-8 w-max border border-rose-600 bg-rose-600 text-white hover:bg-rose-600"
           variant="destructive"
         >
           API: Error

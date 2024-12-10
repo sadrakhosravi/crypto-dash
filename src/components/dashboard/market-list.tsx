@@ -17,7 +17,7 @@ export function MarketList() {
 
   return (
     <Card className="relative h-full overflow-clip border">
-      <CardContent className="flex flex-col py-4">
+      <CardContent className="flex flex-col p-2 py-4 md:p-6">
         <ScrollArea className="h-72">
           {isPending ? (
             <Loader />

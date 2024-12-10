@@ -22,7 +22,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader className="flex h-16 justify-center border-b border-sidebar-border">
         <Logo width={24} height={24} fill="white" />
       </SidebarHeader>
-      <SidebarContent className="lg:px-4 lg:py-2">
+      <SidebarContent className="px-2 py-1.5 lg:px-4 lg:py-2">
         {routes.map((route) => (
           <SidebarMenuItem
             key={route.path}

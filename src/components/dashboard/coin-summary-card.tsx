@@ -140,7 +140,7 @@ export function CoinSummaryCard({
         </div>
 
         {/* Chart Section */}
-        <div className="flex flex-grow items-end justify-center overflow-hidden">
+        <div className="flex h-[20px] flex-grow items-end justify-center overflow-hidden md:h-auto">
           <ChartContainer config={chartConfig} className="h-[120px] w-full">
             <AreaChart
               accessibilityLayer

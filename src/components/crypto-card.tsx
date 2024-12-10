@@ -24,7 +24,7 @@ export function CryptoCard({
   trendImg,
 }: CryptoCardProps) {
   return (
-    <div className="z-10 flex flex-row items-center justify-between gap-10 rounded-lg p-4 shadow-md">
+    <div className="z-10 flex flex-row items-center justify-between gap-3 rounded-lg p-2 shadow-md md:gap-6 md:p-4 lg:gap-10">
       <CoinInfo img={img} name={name} symbol={symbol} />
 
       {trendImg && (
@@ -32,7 +32,7 @@ export function CryptoCard({
           <Image
             src={trendImg}
             className="h-12 w-[100%]"
-            width={100}
+            width={200}
             height={40}
             alt="Trend Image"
           />
