@@ -8,6 +8,7 @@ import { Header } from '@/components/header';
 import type { Metadata } from 'next';
 import ReactQueryProvider from './ReactQueryProvider';
 import { Toaster } from 'sonner';
+import ErrorBoundary from '@/components/error-boundary';
 
 // Font
 const onest = Onest({ subsets: ['latin'] });
@@ -27,28 +28,30 @@ export default function RootLayout({
       <body
         className={`${onest.className} min-w-screen min-h-screen text-sm antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ReactQueryProvider>
-            <TooltipProvider delayDuration={0}>
-              <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                  <Header />
+        <ErrorBoundary>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ReactQueryProvider>
+              <TooltipProvider delayDuration={0}>
+                <SidebarProvider>
+                  <AppSidebar />
+                  <SidebarInset>
+                    <Header />
 
-                  <main className="h-[calc(100%-4rem)] min-h-[calc(100%-4rem)] w-full">
-                    {children}
-                  </main>
-                  <Toaster />
-                </SidebarInset>
-              </SidebarProvider>
-            </TooltipProvider>
-          </ReactQueryProvider>
-        </ThemeProvider>
+                    <main className="h-[calc(100%-4rem)] min-h-[calc(100%-4rem)] w-full">
+                      {children}
+                    </main>
+                    <Toaster />
+                  </SidebarInset>
+                </SidebarProvider>
+              </TooltipProvider>
+            </ReactQueryProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
